@@ -1,0 +1,46 @@
+• Install the required Python library by running this command in your terminal:
+  `pip install requests`
+
+• Download the necessary word list file by running this command:
+  `curl -o 5words.txt https://raw.githubusercontent.com/charlesreid1/five-letter-words/master/sgb-words.txt`
+
+• Run the game bot with this command:
+  `python wordle_game.py`
+
+How the Bot Works:
+
+1.Registration: The first time the script runs, it registers your chosen name (`"durga"`) with the game server to get a unique player ID.
+2.Game Creation: It then creates a new Wordle game on the server for your ID. If a game already exists, it overwrites it.
+3.Guessing Loop:
+    *   The bot picks a random word from its list of possible answers.
+    *   It submits the guess to the server.
+    *   It receives feedback (e.g., `g y r r g`).
+4.Filtering: The bot uses the feedback to eliminate words from its list.
+    *   `g` (Green): Keeps only words with that letter in that exact position.
+    *   `y` (Yellow): Keeps only words that contain that letter but not in that position.
+    *   `r` (Red): Removes all words containing that letter.
+5.Repeat: It repeats the guessing and filtering process until it either guesses the word correctly or runs out of attempts/words.
+
+### How to Customize the Bot
+
+6.Change Player Name: To change the name from "durga" to your own, edit the last line of the file:
+    *   **Find:** `game = Wordle("durga")`
+    *   **Change "durga"** to your desired name.
+
+7.Use a Different Word List: The bot is hardcoded to use a file named `5words.txt`. If you have a different word list file, you must either rename your file to `5words.txt` or change the filename in the code:
+    *   **Find:** `with open("5words.txt", "r") as file:`
+    *   **Change "5words.txt"** to the name of your file.
+
+### Troubleshooting Common Issues
+
+1.Error: `FileNotFoundError: [Errno 2] No such file or directory: '5words.txt'`
+    *   Meaning: You have not downloaded the required word list.
+    *   Solution: Run the `curl` command from the setup instructions to download the file.
+
+2.Error: `requests.exceptions.ConnectionError`
+    *   Meaning: The script cannot connect to the game server at `https://wordle.we4shakthi.in`. The server might be down or you may have a network issue.
+    *   Solution: Check your internet connection and try again later.
+
+3.Bot fails to guess the word.
+    *   Meaning: The bot's random guessing strategy was not lucky enough to find the word in 6 tries.
+    *   Solution: This is a limitation of the current simple algorithm. Run the script again to try with a different random sequence of guesses. For a more permanent fix, the guessing logic would need to be improved to be more strategic.
