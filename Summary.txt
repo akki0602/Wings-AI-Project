@@ -1,0 +1,17 @@
+This program is a Python-based bot designed to automatically play a web-based Wordle game. It requires Python, the `requests` library, and a word list file (`5words.txt`) to run.
+
+**Core Functionality:**
+
+The bot operates by connecting to a specific Wordle game server. It registers a player, starts a new game, and then enters a loop to guess the secret word within six attempts. Its current strategy is simple: for each turn, it randomly selects a word from its list of valid possibilities and submits it. Based on the feedback from the server (indicating correct letters, misplaced letters, and incorrect letters), it filters its internal word list to narrow down the potential answers for the next guess.
+
+**Code Structure (Current and Proposed):**
+
+Currently, all the logic is contained within a single file, `wordle_game.py`. This file handles everything from server communication to the guessing logic. However, a more organized and robust structure has been proposed, which involves splitting the code into three distinct modules:
+
+1.  **`game_client.py` (The Messenger):** This module would be solely responsible for all network interactions, such as registering the player and sending guesses to the game server.
+2.  **`wordle_solver.py` (The Brain):** This module would contain the core puzzle-solving logic. It would manage the word list and implement the strategy for filtering and choosing words, completely separate from the networking code.
+3.  **`main.py` (The Coordinator):** This would be the main entry point of the program. It would orchestrate the game by using the `game_client` to talk to the server and the `wordle_solver` to make intelligent guesses.
+
+**Critique and Potential Improvements:**
+
+The current implementation has a significant limitation: its guessing strategy is based on random chance, which is inefficient and may often fail to guess the word in time. The provided analysis suggests a major improvement would be to implement a smarter guessing algorithm based on information theory. Instead of picking a random word, the bot could choose the word that is statistically most likely to provide the most information and narrow down the list of possibilities, regardless of the feedback. This would dramatically improve its performance and success rate.
